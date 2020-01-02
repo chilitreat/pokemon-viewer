@@ -1,0 +1,23 @@
+{
+  "name": "pokemon-viewer",
+  "version": "1.0.0",
+  "dependencies": {
+    "@nuxtjs/apollo": "^4.0.0-rc19",
+    "@vue/apollo-composable": "^4.0.0-alpha.4",
+    "@vue/composition-api": "latest",
+    "apollo-boost": "^0.4.7",
+    "apollo-client": "^2.6.8",
+    "graphql-tag": "^2.10.1",
+    "nuxt": "latest"
+  },
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "post-update": "yarn upgrade --latest"
+  },
+  "devDependencies": {
+    "@nuxt/typescript-build": "latest"
+  }
+}
