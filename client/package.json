@@ -18,6 +18,7 @@
     "post-update": "yarn upgrade --latest"
   },
   "devDependencies": {
-    "@nuxt/typescript-build": "latest"
+    "@nuxt/typescript-build": "latest",
+    "@nuxtjs/vuetify": "^1.9.1"
   }
 }
