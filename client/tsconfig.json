@@ -23,7 +23,9 @@
       ]
     },
     "types": [
-      "@nuxt/types"
+      "@nuxt/types",
+      "@nuxtjs/vuetify",
+      "vuetify",
     ]
   },
   "files": [
