@@ -13,14 +13,57 @@
         <v-chip-group>
           <v-chip v-for="(type, i) in pokemon.pokemon.types" :key="i" x-small color="secondary">{{ type }}</v-chip>
         </v-chip-group>
-
         <v-card-text>
           <p>{{ `Height: ${pokemon.pokemon.height.minimum} ~ ${pokemon.pokemon.height.maximum}` }}</p>
           <p>{{ `Weight: ${pokemon.pokemon.weight.minimum} ~ ${pokemon.pokemon.weight.maximum}` }}</p>
         </v-card-text>
+
+        <v-row>
+          <div>
+            <p>Fast</p>
+            <v-simple-table>
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th class="text-left">Name</th>
+                    <th class="text-left">Type</th>
+                    <th class="text-left">Damage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="attack in pokemon.pokemon.attacks.fast" :key="attack.name">
+                    <td>{{ attack.name }}</td>
+                    <td>{{ attack.type }}</td>
+                    <td>{{ attack.damage }}</td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+          </div>
+          <div>
+            <p>Special</p>
+            <v-simple-table>
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th class="text-left">Name</th>
+                    <th class="text-left">Type</th>
+                    <th class="text-left">Damage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="attack in pokemon.pokemon.attacks.special" :key="attack.name">
+                    <td>{{ attack.name }}</td>
+                    <td>{{ attack.type }}</td>
+                    <td>{{ attack.damage }}</td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+          </div>
+        </v-row>
       </v-card>
     </div>
-
   </div>
 </template>
 <script lang="ts">
@@ -48,10 +91,12 @@ const getPokemonById = (id: string) => (gql`
       attacks {
         fast {
           name
+          type
           damage
         }
         special {
           name
+          type
           damage
         }
       }
