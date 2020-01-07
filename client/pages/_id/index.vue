@@ -11,9 +11,16 @@
         <v-card-title>{{ `${pokemon.pokemon.number} ${pokemon.pokemon.name}` }}</v-card-title>
         <v-card-subtitle>{{ `${pokemon.pokemon.classification}` }}</v-card-subtitle>
         <v-chip-group>
+          <p>Types: </p>
           <v-chip v-for="(type, i) in pokemon.pokemon.types" :key="i" x-small color="secondary">{{ type }}</v-chip>
         </v-chip-group>
+        <v-chip-group>
+          <p>Weaknesses: </p>
+          <v-chip v-for="(weakness, i) in pokemon.pokemon.weaknesses" :key="i" x-small color="secondary">{{ weakness }}</v-chip>
+        </v-chip-group>
         <v-card-text>
+          <p>{{  `MaxCP: ${pokemon.pokemon.maxCP}` }}</p>
+          <p>{{  `MaxHP: ${pokemon.pokemon.maxHP}` }}</p>
           <p>{{ `Height: ${pokemon.pokemon.height.minimum} ~ ${pokemon.pokemon.height.maximum}` }}</p>
           <p>{{ `Weight: ${pokemon.pokemon.weight.minimum} ~ ${pokemon.pokemon.weight.maximum}` }}</p>
         </v-card-text>
