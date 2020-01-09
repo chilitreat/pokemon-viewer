@@ -69,6 +69,23 @@
             </v-simple-table>
           </div>
         </v-row>
+
+        <v-row>
+          <v-col
+            v-for="pokemon in pokemon.pokemon.evolutions"
+            :key="pokemon.id"
+            :cols="3"
+          >
+            <nuxt-link :to="pokemon.id">
+              <v-img
+                :src="pokemon.image"
+              ></v-img>
+              <v-card-text>
+                <p>{{ `${pokemon.number} ${pokemon.name}` }}</p>
+              </v-card-text>
+            </nuxt-link>
+          </v-col>
+        </v-row>
       </v-card>
     </div>
   </div>
@@ -116,7 +133,7 @@ const getPokemonById = (id: string) => (gql`
         name
         classification
         types
-        fleeRate
+        image
       }
       evolutionRequirements {
         amount
