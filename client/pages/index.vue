@@ -2,11 +2,11 @@
   <div>
     <div v-if="loading">loading ...</div>
     <div v-if="error">{{ error }}</div>
-    <div v-else-if="state.pokemons && state.pokemons.pokemons">
+    <div v-else-if="state && state.pokemons">
       <v-list>
         <v-list-item-group color="primary">
           <v-list-item
-            v-for="(pokemon, i) in state.pokemons.pokemons"
+            v-for="(pokemon, i) in state.pokemons"
             :key="i"
           >
             <v-list-item-content>
@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import { createComponent,reactive, ref, computed } from '@vue/composition-api'
-import { useQuery } from '@vue/apollo-composable'
+import { useQuery, useResult } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 
 const getPokemons = (count: number) => (gql`
@@ -49,8 +49,10 @@ const NUMBER_OF_ALL_POKEMONS = 151;
 export default createComponent({
   setup () {
     const { result, loading, error } = useQuery(getPokemons(NUMBER_OF_ALL_POKEMONS))
+    const pokemons = useResult(result)
+
     const state = reactive({
-      pokemons: result
+      pokemons
     });
 
     return {

@@ -5,24 +5,24 @@
     <div v-else-if="pokemon">
       <v-card>
         <v-img
-          :src="pokemon.pokemon.image"
+          :src="pokemon.image"
           max-width="300"
         ></v-img>
-        <v-card-title>{{ `${pokemon.pokemon.number} ${pokemon.pokemon.name}` }}</v-card-title>
-        <v-card-subtitle>{{ `${pokemon.pokemon.classification}` }}</v-card-subtitle>
+        <v-card-title>{{ `${pokemon.number} ${pokemon.name}` }}</v-card-title>
+        <v-card-subtitle>{{ `${pokemon.classification}` }}</v-card-subtitle>
         <v-chip-group>
           <p>Types: </p>
-          <v-chip v-for="(type, i) in pokemon.pokemon.types" :key="i" x-small color="secondary">{{ type }}</v-chip>
+          <v-chip v-for="(type, i) in pokemon.types" :key="i" x-small color="secondary">{{ type }}</v-chip>
         </v-chip-group>
         <v-chip-group>
           <p>Weaknesses: </p>
-          <v-chip v-for="(weakness, i) in pokemon.pokemon.weaknesses" :key="i" x-small color="secondary">{{ weakness }}</v-chip>
+          <v-chip v-for="(weakness, i) in pokemon.weaknesses" :key="i" x-small color="secondary">{{ weakness }}</v-chip>
         </v-chip-group>
         <v-card-text>
-          <p>{{ `MaxCP: ${pokemon.pokemon.maxCP}` }}</p>
-          <p>{{ `MaxHP: ${pokemon.pokemon.maxHP}` }}</p>
-          <p>{{ `Height: ${pokemon.pokemon.height.minimum} ~ ${pokemon.pokemon.height.maximum}` }}</p>
-          <p>{{ `Weight: ${pokemon.pokemon.weight.minimum} ~ ${pokemon.pokemon.weight.maximum}` }}</p>
+          <p>{{ `MaxCP: ${pokemon.maxCP}` }}</p>
+          <p>{{ `MaxHP: ${pokemon.maxHP}` }}</p>
+          <p>{{ `Height: ${pokemon.height.minimum} ~ ${pokemon.height.maximum}` }}</p>
+          <p>{{ `Weight: ${pokemon.weight.minimum} ~ ${pokemon.weight.maximum}` }}</p>
         </v-card-text>
 
         <v-row>
@@ -38,7 +38,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="attack in pokemon.pokemon.attacks.fast" :key="attack.name">
+                  <tr v-for="attack in pokemon.attacks.fast" :key="attack.name">
                     <td>{{ attack.name }}</td>
                     <td>{{ attack.type }}</td>
                     <td>{{ attack.damage }}</td>
@@ -59,7 +59,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="attack in pokemon.pokemon.attacks.special" :key="attack.name">
+                  <tr v-for="attack in pokemon.attacks.special" :key="attack.name">
                     <td>{{ attack.name }}</td>
                     <td>{{ attack.type }}</td>
                     <td>{{ attack.damage }}</td>
@@ -72,7 +72,7 @@
 
         <v-row>
           <v-col
-            v-for="pokemon in pokemon.pokemon.evolutions"
+            v-for="pokemon in pokemon.evolutions"
             :key="pokemon.id"
             :cols="3"
           >
@@ -92,7 +92,7 @@
 </template>
 <script lang="ts">
 import { createComponent,SetupContext, reactive, ref, computed } from '@vue/composition-api'
-import { useQuery } from '@vue/apollo-composable'
+import { useQuery, useResult } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 
 const getPokemonById = (id: string) => (gql`
@@ -194,9 +194,9 @@ export default createComponent({
   setup(props, context: SetupContext) {
     const id = context.root.$route.params.id;
     const { result, loading, error } = useQuery<{pokemon: Pokemon}>(getPokemonById(id));
-
+    const pokemon = useResult(result)
     return {
-      pokemon: result,
+      pokemon,
       loading,
       error
     }
