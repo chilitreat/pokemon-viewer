@@ -92,7 +92,7 @@
 </template>
 <script lang="ts">
 import { createComponent,SetupContext, reactive, ref, computed } from '@vue/composition-api'
-import { useQuery, useResult } from '@vue/apollo-composable'
+import { useQuery, useResult, UseQueryOptions } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 
 const getPokemonById = (id: string) => (gql`
@@ -192,8 +192,11 @@ interface Pokemon {
 
 export default createComponent({
   setup(props, context: SetupContext) {
+    const options = ref<UseQueryOptions>({
+      fetchPolicy: 'cache-first',
+    })
     const id = context.root.$route.params.id;
-    const { result, loading, error } = useQuery<{pokemon: Pokemon}>(getPokemonById(id));
+    const { result, loading, error } = useQuery<{pokemon: Pokemon}>(getPokemonById(id), options);
     const pokemon = useResult(result)
     return {
       pokemon,

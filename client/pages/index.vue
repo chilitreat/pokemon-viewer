@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import { createComponent,reactive, ref, computed } from '@vue/composition-api'
-import { useQuery, useResult } from '@vue/apollo-composable'
+import { useQuery, useResult, UseQueryOptions } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 
 const getPokemons = (count: number) => (gql`
@@ -48,7 +48,10 @@ const NUMBER_OF_ALL_POKEMONS = 151;
 
 export default createComponent({
   setup () {
-    const { result, loading, error } = useQuery(getPokemons(NUMBER_OF_ALL_POKEMONS))
+    const options = ref<UseQueryOptions>({
+      fetchPolicy: 'cache-first',
+    })
+    const { result, loading, error } = useQuery(getPokemons(NUMBER_OF_ALL_POKEMONS), null, options)
     const pokemons = useResult(result)
 
     const state = reactive({
